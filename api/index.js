@@ -4,6 +4,7 @@ const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
 const env = require("dotenv").config()
 const register = require("./router/Register")
+const login = require("./router/Login")
 
 const app = express()
 
@@ -13,5 +14,6 @@ app.use(bodyparser.json())
 app.use(cors())
 
 app.use("/register", register)
+app.use("/login", login)
 
 app.listen(env.parsed.PORT, (req, res) => {console.log("server is running port 5000")})
