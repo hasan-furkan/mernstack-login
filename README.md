@@ -4,4 +4,4 @@
 
 **Back-End:** Node, Express, jsonwebtoken, Mongoose, bcrypt, body-parser, cors, dotenv 
 
-** theme link <a href="https://demos.creative-tim.com/notus-react/#/admin/dashboard">
+** theme link https://demos.creative-tim.com/notus-react/#/admin/dashboard
