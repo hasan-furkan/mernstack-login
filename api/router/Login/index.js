@@ -1,21 +1,53 @@
-const express = require("express")
-const Register = require("../../schema/Register")
+const express = require("express");
+const Register = require("../../schema/Register");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const env = require("dotenv").config();
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/verifyLogin", (req, res) => {
-    const email = req.params.email
+router.post("/verifyLogin", async (req, res) => {
+  try {
+    const user = await Register.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) return res.status(400).json({ msg: "Wrong Password" });
+    const userId = user.id;
+    const name = user.name;
+    const email = user.email;
+    const accessToken = jwt.sign(
+      { userId, name, email },
+      env.parsed.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "15s",
+      }
+    );
+    const refreshToken = jwt.sign(
+      { userId, name, email },
+      env.parsed.REFRESH_TOKEN_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+    await Register.findOneAndUpdate(
+      { refresh_token: refreshToken },
+      {
+        where: {
+          id: userId,
+        },
+      }
+    );
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    res.json({ accessToken });
+  } catch (error) {
+    res.status(404).json({ msg: "Email not found" });
+  }
+});
 
-    Register.findOne(email)
-        .then((res) => {
-            // if(email === res.email) {
-            //     console.log("email dogru")
-            // }else {
-            //     console.log("yanlis")
-            // }
-            console.log(email)
-            console.log(res.email)
-        })
-})
-
-module.exports = router
+module.exports = router;
