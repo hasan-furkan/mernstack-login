@@ -15,7 +15,7 @@ router.post("/verifyLogin", async (req, res) => {
     });
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) return res.status(400).json({ msg: "Wrong Password" });
-    const userId = user.id;
+    const userId = user._id;
     const name = user.name;
     const email = user.email;
     const accessToken = jwt.sign(

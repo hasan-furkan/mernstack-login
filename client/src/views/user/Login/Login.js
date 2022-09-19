@@ -2,24 +2,39 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export const Login = () => {
+  const notify = () => toast("Wow so easy!");
+  const notifyError = (name) =>
+    toast.error(`${name}`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data, e) => {
+  const onSubmit = async (data, e) => {
     try {
       axios
         .post("http://localhost:5000/login/verifyLogin", data, {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {
+          notify();
           navigate("/dashboard");
         })
-        .catch((error) => {});
+        .catch((error) => {
+          notifyError(error.response.data.msg);
+        });
     } catch (e) {
       if (e.response) {
         alert(e.response.data.msg);
@@ -84,6 +99,7 @@ export const Login = () => {
                     />
                   </div>
                   {errors.email && <span>This field is required</span>}
+                  <ToastContainer />
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
