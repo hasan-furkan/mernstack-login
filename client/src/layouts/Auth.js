@@ -1,12 +1,13 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Login } from "./user/Login/Login";
-import { Register } from "./user/Register/Register";
+import { Login } from "../views/auth/Login";
+import { Register } from "../views/auth/Register";
 import FooterSmall from "../components/Footers/FooterSmall";
 import Navbar from "../components/Navbars/AuthNavbar";
 
-export function Home() {
+export function Auth() {
   return (
     <>
+      <Navbar transparent />
       <main>
         <section className="relative w-full h-full py-40 min-h-screen">
           <div
@@ -19,12 +20,9 @@ export function Home() {
             }}
           ></div>
           <Routes>
-            <Route path="/home/login" element={<Login />} />
-            <Route path="/home/register" element={<Register />} /> />
-            <Route
-              path="/"
-              element={<Navigate replace to="/home/register" />}
-            />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/register" element={<Register />} /> />
+            <Route path="/" element={<Navigate replace to="/auth/login" />} />
           </Routes>
           <FooterSmall absolute />
         </section>

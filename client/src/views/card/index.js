@@ -1,12 +1,11 @@
-import {Register} from "../user/Register/Register";
+import { Register } from "../auth/Register";
 
 export const Card = () => {
-    return (
-
+  return (
     <div className="card">
-        <div className="card-body">
-            <Register />
-        </div>
+      <div className="card-body">
+        <Register />
+      </div>
     </div>
-    )
-}
+  );
+};
