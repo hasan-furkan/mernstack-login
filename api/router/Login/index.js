@@ -14,6 +14,8 @@ router.post("/verifyLogin", async (req, res) => {
       },
     });
     const match = await bcrypt.compare(req.body.password, user.password);
+    if (req.body.email !== user.email)
+      return res.status(400).json({ msg: "Email not found" });
     if (!match) return res.status(400).json({ msg: "Wrong Password" });
     const userId = user._id;
     const name = user.name;
