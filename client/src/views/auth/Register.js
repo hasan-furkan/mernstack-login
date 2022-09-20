@@ -25,7 +25,7 @@ export const Register = () => {
       e.target.reset();
     }
 
-    // navigate("/home/login");
+    navigate("/auth/login");
   };
 
   return (
