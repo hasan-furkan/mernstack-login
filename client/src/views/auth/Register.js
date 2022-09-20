@@ -15,7 +15,7 @@ export const Register = () => {
       alert("password and confirm password not much");
     } else {
       axios
-        .post("http://localhost:5000/register/addUser", data, {
+        .post("http://localhost:4000/register/addUser", data, {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {})

@@ -16,4 +16,4 @@ app.use(cors())
 app.use("/register", register)
 app.use("/login", login)
 
-app.listen(env.parsed.PORT, (req, res) => {console.log("server is running port 5000")})
+app.listen(env.parsed.PORT, (req, res) => {console.log("server is running port 4000")})
