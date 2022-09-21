@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Register } from "./views/auth/Register";
 import { Login } from "./views/auth/Login";
 import { Dashboard } from "./views/dashboard/Dashboard";
+import { Form } from "./views/formManagement/Form";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/auth/login" element={<Login />} />
         </Route>
         <Route path={"dashboard"} element={<Dashboard />} />
+        <Route path={"/form"} element={<Form />} />
       </Routes>
     </BrowserRouter>
   );
