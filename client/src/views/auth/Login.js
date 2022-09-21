@@ -43,7 +43,7 @@ export const Login = () => {
           setProgress(progress + 100);
           notify();
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/form");
           }, 2000);
         })
         .catch((error) => {

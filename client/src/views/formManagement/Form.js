@@ -3,8 +3,30 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 export function Form() {
+  const notify = () =>
+    toast.success("Added", {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  const notifyError = (name) =>
+    toast.error(`${name}`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   const navigate = useNavigate();
   const {
     register,
@@ -13,7 +35,19 @@ export function Form() {
   } = useForm();
   const [phone, setPhone] = useState();
   const onSubmit = (data, e) => {
-    console.log(data);
+    axios
+      .post("http://localhost:4000/form", data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        notify();
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      })
+      .catch((error) => {
+        notifyError(error.response.data.msg);
+      });
   };
 
   return (
@@ -119,6 +153,7 @@ export function Form() {
                     >
                       Submit
                     </button>
+                    <ToastContainer />
                   </div>
                 </form>
               </div>
