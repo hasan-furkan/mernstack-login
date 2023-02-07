@@ -1,24 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const bodyparser = require("body-parser");
-const mongoose = require("mongoose");
-const env = require("dotenv").config();
-const register = require("./router/Register");
-const login = require("./router/Login");
-const form = require("./router/Form");
-const app = express();
+const express = require('express');
+const cors = require('cors')
+const bodyParser = require("body-parser");
+const mongoose = require('mongoose')
+const env = require('dotenv').config()
+require("dotenv").config();
 
-mongoose
-  .connect(env.parsed.CONNECTION_URL)
-  .then(() => console.log("connected to db"));
+const auth = require("./routes/auth")
 
-app.use(bodyparser.json());
-app.use(cors());
+const app = express()
 
-app.use("/register", register);
-app.use("/login", login);
-app.use("/form", form);
+app.use(cors())
+app.use(bodyParser.json())
 
-app.listen(env.parsed.PORT, (req, res) => {
-  console.log("server is running port 4000");
-});
+app.use('/auth', auth)
+
+mongoose.connect(process.env.DB, () => console.log("connected to database."))
+
+app.listen(process.env.PORT || 6000, () => console.log(`6000 portu dinleniyor`))
