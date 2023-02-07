@@ -13,12 +13,15 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
 import Tables from "./pages/Tables";
 import Profile from "./pages/Profile";
-import SignUp from "./pages/SignUp";
+import {SignUp} from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
+
+import 'react-toastify/dist/ReactToastify.css'
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -33,6 +36,7 @@ function App() {
           <Redirect from="*" to="/dashboard" />
         </Main>
       </Switch>
+        <ToastContainer />
     </div>
   );
 }

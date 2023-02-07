@@ -43,7 +43,6 @@ const userSchema = mongoose.Schema({
         default: false
     },
     loginAttempt: {type: Number},
-
     },
     {
         timestamps: true
