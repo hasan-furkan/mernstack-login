@@ -27,9 +27,9 @@ router.post("/register", [
                 req.body.email,
                 "confirm-email",
                 {
-                    product: "Only Learning Management",
+                    product: "Only Mern Management",
                     name: req.body.fullName,
-                    subject: "Only Learning Management Email Verification",
+                    subject: "Only Mern Management Email Verification",
                     token: token
                 }
             )
@@ -47,11 +47,10 @@ router.get("/confirmation/:confirmationCode",  async (req, res) => {
             if (user) return res.status(404).json({status: false, message: "user not found"})
             await jwt.verify(req.params.confirmationCode, process.env.SECRET)
              await User.updateOne({status: "Active"})
-            return res.status(200).json({status: true, message: "user verification successful"})
+             res.redirect("http://localhost:3000/verification-email")
         }catch (e) {
             console.log("catch error", e)
         }
-        res.redirect("http://localhost:3000/login")
     })
 
 })

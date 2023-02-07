@@ -16,6 +16,13 @@ export const validationRegisterSchema = Yup.object().shape({
         .required("Kvkk text confirm required")
 });
 
+export const yupSync = {
+    async validator({ field }, value) {
+        await validationRegisterSchema.validateSyncAt(field, { [field]: value });
+    }
+};
+
+
 export const validationLoginSchema= Yup.object().shape({
     email: Yup.string()
         .email('Please enter valid email')
@@ -30,9 +37,8 @@ export const validationLoginSchema= Yup.object().shape({
         .label('Password'),
 });
 
-
-export const yupSync = {
+export const loginSync = {
     async validator({ field }, value) {
-        await validationRegisterSchema.validateSyncAt(field, { [field]: value });
-    },
+        await validationLoginSchema.validateSyncAt(field, { [field]: value });
+    }
 };

@@ -16,4 +16,4 @@ app.use('/auth', auth)
 
 mongoose.connect(process.env.DB, () => console.log("connected to database."))
 
-app.listen(process.env.PORT || 6000, () => console.log(`6000 portu dinleniyor`))
+app.listen(process.env.PORT || 4000, () => console.log(`${process.env.PORT} portu dinleniyor`))

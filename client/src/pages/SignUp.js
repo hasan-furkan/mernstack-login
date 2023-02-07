@@ -21,11 +21,13 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import HtmlHead from "../components/layout/Helmet";
-import {toastError, toastSuccess} from "../components/toastComponent";
+import {toastError, toastSuccess, toastWarning} from "../components/toastComponent";
 import {useDispatch} from "react-redux";
 
-import {setUser} from "../stores/auth";
-import {validationRegisterSchema, yupSync} from "../utils/validate";
+import { setUser } from "../stores/auth";
+import { yupSync } from "../utils/validate";
+import {registerService} from "../service/authService";
+import axios from "axios";
 
 const { Title } = Typography;
 const { Footer, Content } = Layout;
@@ -33,12 +35,19 @@ const { Footer, Content } = Layout;
 export const  SignUp = () => {
   const dispatch = useDispatch()
 
-  const onFinish = (values) => {
-      toastSuccess("basarili")
-  };
-
   const onFinishFailed = (errorInfo) => {
     toastError("lutfen formu duzgun bir sekilde doldurunuz")
+  };
+
+  const onFinish = async (values) => {
+     try{
+      const response = await registerService(values)
+       console.log(response)
+       toastSuccess("kayit basarili")
+     }catch (e) {
+       console.log(e)
+       toastWarning(e.response.data.message)
+     }
   };
   return (
       <>
