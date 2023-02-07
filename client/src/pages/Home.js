@@ -45,6 +45,7 @@ import team2 from "../assets/images/team-2.jpg";
 import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
+import HtmlHead from "../components/layout/Helmet";
 
 function Home() {
   const { Title, Text } = Typography;
@@ -342,6 +343,7 @@ function Home() {
 
   return (
     <>
+      <HtmlHead title="Dashboard" description="Dashboard" />
       <div className="layout-content">
         <Row className="rowgap-vbox" gutter={[24, 0]}>
           {count.map((c, index) => (

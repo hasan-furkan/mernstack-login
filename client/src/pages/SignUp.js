@@ -31,6 +31,7 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+import HtmlHead from "../components/layout/Helmet";
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
@@ -125,6 +126,7 @@ export default class SignUp extends Component {
     };
     return (
       <>
+        <HtmlHead title="Sign Up" description="Sign Up" />
         <div className="layout-default ant-layout layout-sign-up">
           <Header>
             <div className="header-col header-brand">

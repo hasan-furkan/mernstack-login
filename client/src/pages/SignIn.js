@@ -29,6 +29,7 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+import HtmlHead from "../components/layout/Helmet";
 function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
@@ -125,6 +126,7 @@ export default class SignIn extends Component {
     };
     return (
       <>
+        <HtmlHead title="Sign In" description="Sign In" />
         <Layout className="layout-default layout-signin">
           <Header>
             <div className="header-col header-brand">

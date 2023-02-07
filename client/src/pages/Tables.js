@@ -39,6 +39,7 @@ import face4 from "../assets/images/face-4.jpg";
 import face5 from "../assets/images/face-5.jpeg";
 import face6 from "../assets/images/face-6.jpeg";
 import pencil from "../assets/images/pencil.svg";
+import HtmlHead from "../components/layout/Helmet";
 
 const { Title } = Typography;
 
@@ -591,6 +592,7 @@ function Tables() {
 
   return (
     <>
+      <HtmlHead title="Tables" description="Tables" />
       <div className="tabled">
         <Row gutter={[24, 0]}>
           <Col xs="24" xl={24}>
