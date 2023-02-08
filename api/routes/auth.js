@@ -46,25 +46,24 @@ router.post("/register", [
     })
 })
 
-router.get("/:id/confirmation/:confirmationCode", (req, res) => {
-     User.findOne({_id: req.params.id}, async (err, user) => {
+router.get("/:id/confirmation/:confirmationCode", async(req, res) => {
        try{
-           if (err) return res.status(404).json({status: false, message: "hata verildi"})
+           const user = await User.findOne({_id: req.params.id})
            if (!user) return res.status(404).json({status: false, message: "user not found"})
 
-           const token = Token.findOne({
+           const token = await Token.findOne({
                userId: req.params.id,
                token: req.params.confirmationCode
            })
            if (!token) return res.status(404).json({status: false, message: "invalid link"})
 
-           await User.updateOne({id: req.params.id, status: "Active"})
-
+            user.set({ status: "Active" })
+            await user.save()
+            await Token.findByIdAndRemove(token._id)
            res.redirect("http://localhost:3000/verification-email")
        }catch (e) {
            console.log("catch error", e)
        }
-    })
 })
 
 
