@@ -2,14 +2,10 @@ const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs")
 const config = require("../config")
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     fullName: {
         type: String,
         required: true,
-    },
-    phone: {
-      type: String,
-      unique: true
     },
     email: {
         type: String,
@@ -29,10 +25,6 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ["Pending", "Active"],
         default: "Pending",
-    },
-    confirmationCode: {
-        type: String,
-        unique: true,
     },
     deleted: {
         type: Boolean,
