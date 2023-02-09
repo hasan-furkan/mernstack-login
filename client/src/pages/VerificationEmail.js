@@ -1,5 +1,3 @@
-import {useEffect} from "react";
-import {verificationEmailService} from "../service/authService";
 import {Card, Col, Row} from "antd";
 import Title from "antd/es/typography/Title";
 

@@ -24,6 +24,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import {ToastContainer} from "react-toastify";
 import {VerificationEmail} from "./pages/VerificationEmail";
 
+import "./i18n"
+
 function App() {
   return (
     <div className="App">
