@@ -66,5 +66,25 @@ router.get("/:id/confirmation/:confirmationCode", async(req, res) => {
        }
 })
 
+router.post("/login", [
+    body('email').notEmpty(),
+    body('password').notEmpty(),
+],async (req, res) => {
+    res.header(
+        "Access-Control-Allow-Headers",
+        "x-access-token, Origin, Content-Type, Accept"
+    );
+
+    try {
+        const user = await User.findOne({email: sanitize(req.body.email)})
+
+        if (!user) return res.status(404).json({status: false, message: "user not found please register"})
+        return res.status(200).json({status: true, message: user.email})
+    } catch (e) {
+        console.log(e)
+    }
+
+})
+
 
 module.exports = router
