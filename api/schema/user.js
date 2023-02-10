@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcrypt")
 const config = require("../config")
 
 const userSchema = new mongoose.Schema({
@@ -34,21 +34,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    loginAttempt: {type: Number},
+    loginAttempt: {type: Number, default: 0},
     },
     {
         timestamps: true
     }
 )
-
-userSchema.pre('save', function(next) {
-    let user = this
-     bcrypt.hash(config.random_secret_key, bcrypt.genSaltSync(config.salt), (err, hash) => {
-        if (err) return next(err)
-        user.password = hash
-        next()
-    })
-})
 
 const User = mongoose.model('user', userSchema)
 module.exports = {User: User}
