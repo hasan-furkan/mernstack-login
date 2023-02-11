@@ -9,6 +9,8 @@ const {passHash, passValidate} = require("../functions/passValidate_functions")
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const config = require("../config")
+
+
 router.post("/register", [
     body('email').notEmpty(),
     body('password').notEmpty(),
@@ -97,6 +99,8 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
             }
 
             // jwt
+            const token = jwt.sign({ user: user._id }, config.secretKey, { expiresIn: "1h" });
+            res.cookie("token", token, { httpOnly: true });
 
             res.status(200).json({status: true, message: "basariyla giris yapildi"})
 
