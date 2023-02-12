@@ -7,6 +7,7 @@
       "signup":"Sign Up",
       "signupSuccess": "Registration successful, please verify your account from your email address",
       "signininstead":"Already have an account? Sign in instead.",
+      "signupinstead": "Don't have an account? Sign Up",
       "agree":"I agree to",
       "privacypolicyandtersm":" privacy policy & terms",
       "username_or_email": "Username/E-mail",
@@ -35,7 +36,7 @@
         "not_found_booth": "Box office description not found",
         "unauthorized_only_allowed_login_on_app": "You can only log in through the app.",
         "User Not Found or Wrong Password": "Username or Password Error!",
-        "User is not active": "User account is not active!"
+        "userIsNotActive": "User account is not active!"
       }
     },
     "validation": {

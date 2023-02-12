@@ -10,6 +10,8 @@ export const registerService = async (values) => {
   })
 }
 
-export const verificationEmailService = async (token) => {
-  return await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/confirmation/${token}`)
+export const loginService = async (values) => {
+  return await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/login`, values, {
+    headers: headers
+  })
 }

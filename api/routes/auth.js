@@ -78,7 +78,7 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
             if (!user) return res.status(404).json({status: false, message: "user not found"})
 
             // status control
-            if (user?.status !== "Active") return res.status(404).json({
+            if (user?.status !== "Active") return res.status(403).send({
                 status: false,
                 message: "please email account verify"
             })
@@ -92,17 +92,17 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
 
                 if (attempt > config.lockAccountLimit) {
                     user.isActive = false
-                    return res.status(404).json({status: false, message: "please reset password"})
+                    return res.status(401).json({status: false, message: "please reset password"})
                 }
                 await user.save()
-                return res.status(404).json({status: false, message: "email or password wrong"})
+                return res.status(403).json({status: false, message: "email or password wrong"})
             }
 
             // jwt
             const token = jwt.sign({ user: user._id }, config.secretKey, { expiresIn: "1h" });
             res.cookie("token", token, { httpOnly: true });
 
-            res.status(200).json({status: true, message: "basariyla giris yapildi"})
+           return res.status(200).json({status: true, message: "login success"})
 
         } catch (e) {
             console.log(e)

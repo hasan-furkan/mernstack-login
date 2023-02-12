@@ -7,6 +7,7 @@
       "signup":"Kayıt Ol",
       "signupSuccess": "Kayıt başarılı, lütfen hesabınızı e-posta adresinizden doğrulayın",
       "signininstead":"Mevcut hesabınız var mı? Oturum açmayı deneyin.",
+      "signupinstead": "Bir hesabınız yok mu? Kayıt olmayı deneyin",
       "privacypolicyandtersm":"Gizlilik politikasını ve şartlarını",
       "agree":"kabul ediyorum.",
       "username_or_email": "Kullanıcı Adı/E-posta",
@@ -35,7 +36,7 @@
         "not_found_booth": "Gişe tanımlaması bulunamadı",
         "unauthorized_only_allowed_login_on_app": "Yalnızca uygulama üzerinden giriş yapabilirsiniz.",
         "User Not Found or Wrong Password": "Kullanıcı Adı veya Şifre Hatalı!",
-        "User is not active": "Kullanıcı hesabı aktif değil!"
+        "userIsNotActive": "Kullanıcı hesabı aktif değil!"
       }
     },
     "validation": {

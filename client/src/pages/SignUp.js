@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import HtmlHead from "../components/layout/Helmet";
 import {toastError, toastSuccess, toastWarning} from "../components/toastComponent";
 
-import { yupSync } from "../utils/validate";
+import { registerSync } from "../utils/validate";
 import {registerService} from "../service/authService";
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ export const  SignUp = () => {
   const {t, i18n } = useTranslation();
 
   const onFinishFailed = (errorInfo) => {
-    toastError(t("login.error"))
+    toastError(t("login.comment"))
   };
 
   const onFinish = async (values) => {
@@ -93,24 +93,24 @@ export const  SignUp = () => {
               >
                 <Form.Item
                     name="fullName"
-                    rules={[yupSync]}
+                    rules={[registerSync]}
                 >
                   <Input placeholder={t('login.username')} />
                 </Form.Item>
                 <Form.Item
                     name="email"
-                    rules={[yupSync]}
+                    rules={[registerSync]}
                 >
                   <Input placeholder={t('login.email')} />
                 </Form.Item>
                 <Form.Item
                     name="password"
-                    rules={[yupSync]}
+                    rules={[registerSync]}
                 >
                   <Input placeholder={t('login.password')} type="password" />
                 </Form.Item>
 
-                <Form.Item name="kvkk" valuePropName="checked" rules={[yupSync]}
+                <Form.Item name="kvkk" valuePropName="checked" rules={[registerSync]}
                 >
                   {i18n.language === "en" ? <Checkbox>
                     {t('login.agree')}{" "}
