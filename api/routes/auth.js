@@ -102,7 +102,7 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
             const token = jwt.sign({ user: user._id }, config.secretKey, { expiresIn: "1h" });
             res.cookie("token", token, { httpOnly: true });
 
-           return res.status(200).json({status: true, message: "login success"})
+           return res.status(200).json({status: true, message: user})
 
         } catch (e) {
             console.log(e)

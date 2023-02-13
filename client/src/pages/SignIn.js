@@ -9,7 +9,6 @@ import {
     Typography,
     Form,
     Input,
-    Switch,
 } from "antd";
 import signinbg from "../assets/images/img-signin.jpg";
 import {
@@ -24,47 +23,46 @@ import ReactCountryFlag from "react-country-flag";
 import {useTranslation} from 'react-i18next';
 import {toastError, toastSuccess, toastWarning} from "../components/toastComponent";
 import {loginService} from "../service/authService";
-
-
-function onChange(checked) {
-    console.log(`switch to ${checked}`);
-}
+import {useDispatch} from "react-redux";
+import {setUser} from "../stores/auth";
 
 const {Title} = Typography;
 const {Footer, Content} = Layout;
 
 export const  SignIn = () => {
+    const dispatch = useDispatch()
     const {t, i18n } = useTranslation();
 
-    const onFinishFailed = (errorInfo) => {
+    const onFinishFailed = () => {
         toastError(t("login.comment"))
     }
 
-    const onFinish = async (values) => {
+    const onFinish = async ( values) => {
         try {
            const response = await loginService(values)
             const { status } = response
-            const { message } = response.data
-
-           // switch (status) {
-           //      case 200:
-           //         return toastSuccess(t('login.success'))
-           //      case 403:
-           //         return toastWarning(t('login.success'))
-           //  }
-
-            if (message === "please email account verify") {
-                return toastWarning(t('login.success'))
-            }else if (message === "login success"){
-                return toastSuccess(t('login.success'))
+            if (status === 200) toastSuccess(t('login.success'))
+            const {message} = response.data
+            dispatch(setUser({
+                email: message.email,
+                name: message.fullName
+            }))
+        }catch (err) {
+            const { message } = err.response.data
+            switch (message) {
+                case "user not found":
+                    return toastError(t('login.errorcodes.not_found'))
+                case "please email account verify":
+                    return toastWarning(t('login.errorcodes.userIsNotActive'))
+                case "please reset password":
+                    return toastError(t('login.resetPasswordMailSend'))
+                case "email or password wrong":
+                    return toastWarning(t('login.error'))
+                default:
+                    return toastError(t("login.comment"))
             }
-
-
-        }catch (e) {
-            console.log(e)
         }
     }
-
 
     return (
         <>
@@ -104,16 +102,6 @@ export const  SignIn = () => {
                                 >
                                     <Input placeholder={`${t('login.password')}`}/>
                                 </Form.Item>
-
-                                <Form.Item
-                                    name="remember"
-                                    className="aligin-center"
-                                    valuePropName="checked"
-                                >
-                                    <Switch defaultChecked onChange={onChange}/>
-                                    {t('login.remember')}
-                                </Form.Item>
-
                                 <Form.Item>
                                     <Button
                                         type="primary"
