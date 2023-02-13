@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import {
     Layout,
     Menu,
@@ -25,6 +25,7 @@ import {toastError, toastSuccess, toastWarning} from "../components/toastCompone
 import {loginService} from "../service/authService";
 import {useDispatch} from "react-redux";
 import {setUser} from "../stores/auth";
+import {cookieSet} from "../hooks/cookie";
 
 const {Title} = Typography;
 const {Footer, Content} = Layout;
@@ -32,7 +33,7 @@ const {Footer, Content} = Layout;
 export const  SignIn = () => {
     const dispatch = useDispatch()
     const {t, i18n } = useTranslation();
-
+    const history = useHistory();
     const onFinishFailed = () => {
         toastError(t("login.comment"))
     }
@@ -47,6 +48,8 @@ export const  SignIn = () => {
                 email: message.email,
                 name: message.fullName
             }))
+            cookieSet(JSON.stringify(message))
+            history.push("/");
         }catch (err) {
             const { message } = err.response.data
             switch (message) {

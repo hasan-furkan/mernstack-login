@@ -9,7 +9,7 @@
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { Switch, Route, Redirect } from "react-router-dom";
+import {Switch, Route, Redirect} from "react-router-dom";
 import Home from "./pages/Home";
 import Tables from "./pages/Tables";
 import Profile from "./pages/Profile";
@@ -25,24 +25,32 @@ import {ToastContainer} from "react-toastify";
 import {VerificationEmail} from "./pages/VerificationEmail";
 
 import "./i18n"
+import {useSelector} from "react-redux";
 
 function App() {
-  return (
-    <div className="App">
-      <Switch>
-        <Route path="/sign-up" exact component={SignUp} />
-        <Route path="/sign-in" exact component={SignIn} />
-        <Route path="/verification-email" component={VerificationEmail} />
-        <Main>
-          <Route exact path="/dashboard" component={Home} />
-          <Route exact path="/tables" component={Tables} />
-          <Route exact path="/profile" component={Profile} />
-          <Redirect from="*" to="/dashboard" />
-        </Main>
-      </Switch>
-        <ToastContainer />
-    </div>
-  );
+    let user = useSelector(state => state.auth.user)
+    return (
+        <div className="App">
+            <Switch>
+                <Route path="/sign-up" exact component={SignUp}/>
+                <Route path="/sign-in" exact component={SignIn}/>
+                <Route path="/verification-email" component={VerificationEmail}/>
+                {user ?
+                    <Main>
+                        <Route exact path="/dashboard" component={Home}/>
+                        <Route exact path="/tables" component={Tables}/>
+                        <Route exact path="/profile" component={Profile}/>
+                        <Redirect from="*" to="/dashboard"/>
+                    </Main>
+                    :
+                    <Main>
+                        <Redirect from="*" to="/sign-in"/>
+                    </Main>
+                }
+            </Switch>
+            <ToastContainer/>
+        </div>
+    );
 }
 
 export default App;
