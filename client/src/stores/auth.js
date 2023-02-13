@@ -4,7 +4,7 @@ import {cookieGet} from "../hooks/cookie";
 const cookie = JSON.parse(cookieGet())
 
 const initialState = {
-    user: {email: cookie.email, name: cookie.fullName} || {},
+    user: {email: cookie.email, name: cookie.fullName},
 }
 
 export const authSlice = createSlice({
@@ -15,7 +15,7 @@ export const authSlice = createSlice({
             state.user = action.payload
         },
         removeUser : (state) => {
-            state.user = {}
+            state.user = false
         }
     },
 })

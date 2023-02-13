@@ -39,6 +39,7 @@ router.post("/register", [
                     product: "Only Mern Management",
                     name: req.body.fullName,
                     subject: "Only Mern Management Email Verification",
+                    baseUrl: process.env.BASE_URL,
                     token: token.token,
                     id: createdUser._id
                 }
