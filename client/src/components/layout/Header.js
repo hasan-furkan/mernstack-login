@@ -34,9 +34,12 @@ import {
   FacebookFilled,
 } from "@ant-design/icons";
 
-import { NavLink, Link } from "react-router-dom";
+import {NavLink, Link, useHistory} from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
+import {useDispatch, useSelector} from "react-redux";
+import {removeUser} from "../../stores/auth";
+import {cookieRemove} from "../../hooks/cookie";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -259,9 +262,17 @@ function Header({
   handleFixedNavbar,
 }) {
   const { Title, Text } = Typography;
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const user = useSelector(state => state.auth.user)
 
   const [visible, setVisible] = useState(false);
   const [sidenavType, setSidenavType] = useState("transparent");
+  const handleUserRemove = () => {
+    dispatch(removeUser())
+    cookieRemove()
+    history.push("/sign-in")
+  }
 
   useEffect(() => window.scrollTo(0, 0));
 
@@ -421,15 +432,20 @@ function Header({
               </div>
             </div>
           </Drawer>
-          <Link to="/sign-in" className="btn-sign-in">
+          <Button onClick={handleUserRemove}>
+            Logout
+          </Button>
+          <Link to="/dashboard" className="btn-sign-in">
             {profile}
-            <span>Sign in</span>
+            {user && <span>{user?.email}</span>}
           </Link>
+
           <Input
             className="header-search"
             placeholder="Type here..."
             prefix={<SearchOutlined />}
           />
+
         </Col>
       </Row>
     </>

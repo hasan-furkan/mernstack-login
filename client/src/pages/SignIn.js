@@ -25,7 +25,7 @@ import {toastError, toastSuccess, toastWarning} from "../components/toastCompone
 import {loginService} from "../service/authService";
 import {useDispatch} from "react-redux";
 import {setUser} from "../stores/auth";
-import {cookieSet} from "../hooks/cookie";
+import { cookieSet} from "../hooks/cookie";
 
 const {Title} = Typography;
 const {Footer, Content} = Layout;

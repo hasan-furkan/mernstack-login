@@ -1,13 +1,13 @@
 import Cookies from 'js-cookie'
 
 export const cookieSet = (values) => {
-    Cookies.set('token', values, { expires: 365 })
+    Cookies.set(process.env.REACT_APP_COOKIE_NAME, values, { expires: 365 })
 }
 
 export const cookieRemove = () => {
-    Cookies.remove('token')
+    Cookies.remove(process.env.REACT_APP_COOKIE_NAME)
 }
 
 export const cookieGet = () => {
-    Cookies.get('token')
+  return Cookies.get(process.env.REACT_APP_COOKIE_NAME) || false
 }

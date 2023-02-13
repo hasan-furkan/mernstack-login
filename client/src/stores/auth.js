@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {cookieGet} from "../hooks/cookie";
+
+const cookie = JSON.parse(cookieGet())
 
 const initialState = {
-    user: false,
+    user: {email: cookie.email, name: cookie.fullName} || {},
 }
 
 export const authSlice = createSlice({
@@ -11,11 +14,13 @@ export const authSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload
         },
-
+        removeUser : (state) => {
+            state.user = {}
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUser } = authSlice.actions
+export const { setUser, removeUser } = authSlice.actions
 
 export default authSlice.reducer

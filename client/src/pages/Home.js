@@ -9,7 +9,7 @@
   =========================================================
   * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import { useState } from "react";
+import { useState} from "react";
 
 import {
   Card,
@@ -48,6 +48,7 @@ import card from "../assets/images/info-card-1.jpg";
 import HtmlHead from "../components/layout/Helmet";
 
 function Home() {
+
   const { Title, Text } = Typography;
 
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);

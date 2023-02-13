@@ -100,7 +100,7 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
 
             // jwt
             const token = jwt.sign({ user: user._id }, config.secretKey, { expiresIn: "1h" });
-            res.cookie("token", token, { httpOnly: false });
+            res.cookie(process.env.COOKIE_NAME, token, { httpOnly: false });
 
             user.isActive = true
            await user.save()
