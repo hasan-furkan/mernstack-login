@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt")
-const config = require("../config");
+const { genSaltSync } = require("bcrypt");
 
 module.exports = {
-     passHash: async function (password) {
-     return await bcrypt.hash(password, config.salt);
+     passHash: async function (password, salt) {
+     return await bcrypt.hash(password, genSaltSync(salt));
     },
 
     passValidate: async function (password, hash) {

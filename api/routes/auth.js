@@ -8,7 +8,6 @@ const mail_functions = require("../functions/mail_functions")
 const {passHash, passValidate} = require("../functions/passValidate_functions")
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const config = require("../config")
 
 
 router.post("/register", [
@@ -25,7 +24,8 @@ router.post("/register", [
         if (err) return res.status(404).json({status: false, message: err.toString()})
         if (user) return res.status(401).json({status: false, message: 'user already in exists'})
         try {
-            const password = await passHash(req.body.password)
+            const salt = parseInt(process.env.SALT)
+            const password = await passHash(req.body.password, salt)
             const newUser = await new User({...req.body, password});
             let createdUser = await newUser.save()
             const token = await new Token({
@@ -91,7 +91,7 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
                 user.loginAttempt += 1
                 const attempt = user?.loginAttempt
 
-                if (attempt > config.lockAccountLimit) {
+                if (attempt > process.env.LOCK_ACCOUNT_LIMIT) {
                     user.isActive = false
                     return res.status(401).json({status: false, message: "please reset password"})
                 }
@@ -100,10 +100,11 @@ router.post("/login", [body('email').notEmpty(), body('password').notEmpty()],
             }
 
             // jwt
-            const token = jwt.sign({ user: user._id }, config.secretKey, { expiresIn: "1h" });
+            const token = jwt.sign({ user: user._id }, process.env.SECRET, { expiresIn: "1h" });
             res.cookie(process.env.COOKIE_NAME, token, { httpOnly: false });
 
             user.isActive = true
+            user.loginAttempt = 0
            await user.save()
            return res.status(200).json({status: true, message: user})
 

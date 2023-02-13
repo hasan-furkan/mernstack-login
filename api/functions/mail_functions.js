@@ -1,22 +1,21 @@
+require("dotenv").config();
 const nodemailer = require('nodemailer');
 const renderer = require("./renderer_functions")
 const smtpTransport = require('nodemailer-smtp-transport');
 
-const config = require("../config")
-
-
  const mail_functions = async (to, template, context) => {
      const html = await renderer(template, context)
+     const {SERVICE, HOST, PASS, USERNAME} = process.env
     const transporter = nodemailer.createTransport(smtpTransport({
-        service: config.service,
-        host: config.host,
+        service: SERVICE,
+        host: HOST,
         auth: {
-            user: config.user,
-            pass: config.pass
+            user: USERNAME,
+            pass: PASS
         }
     }));
     const mailOptions = {
-        from: config.user,
+        from: USERNAME,
         to: to,
         subject: context.subject,
         html: html
@@ -24,7 +23,8 @@ const config = require("../config")
 
 
     transporter.sendMail(mailOptions, function(error, info){
-        return !error;
+        if (error) console.log(error)
+        if (info) console.log(info)
     });
 }
 
