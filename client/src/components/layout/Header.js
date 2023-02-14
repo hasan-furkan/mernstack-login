@@ -432,9 +432,11 @@ function Header({
               </div>
             </div>
           </Drawer>
-          <Button onClick={handleUserRemove}>
+          {user ? <Button onClick={handleUserRemove}>
             Logout
-          </Button>
+          </Button> : <Button onClick={handleUserRemove}>
+            Login
+          </Button>}
           <Link to="/dashboard" className="btn-sign-in">
             {profile}
             {user && <span>{user?.email}</span>}
