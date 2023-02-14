@@ -65,7 +65,7 @@ router.get("/:id/confirmation/:confirmationCode", async (req, res) => {
         user.set({status: "Active"})
         await user.save()
         await Token.findByIdAndRemove(token._id)
-        res.redirect("http://localhost:3000/verification-email")
+        res.redirect(`${process.env.FRONT_END_URL}/verification-email`)
     } catch (e) {
         console.log("catch error", e)
     }
